@@ -11,7 +11,7 @@ class Selection extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       child: Text(text, style: selectionTextStyle(context),), 
-      onPressed: () => fun
+      onPressed: () => fun()
     );
   }
 }

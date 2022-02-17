@@ -1,15 +1,15 @@
-class HomeModel {
+class HomeResponseModel {
   int? status;
-  List<Data>? data;
+  List<HomeModel>? data;
 
-  HomeModel({this.status, this.data});
+  HomeResponseModel({this.status, this.data});
 
-  HomeModel.fromJson(Map<String, dynamic> json) {
+  HomeResponseModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <HomeModel>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(HomeModel.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class HomeModel {
   }
 }
 
-class Data {
+class HomeModel {
   String? eventId;
   String? time;
   String? agency;
@@ -53,7 +53,7 @@ class Data {
   String? focalId;
   String? time2;
 
-  Data(
+  HomeModel(
       {this.eventId,
       this.time,
       this.agency,
@@ -82,7 +82,7 @@ class Data {
       this.focalId,
       this.time2});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HomeModel.fromJson(Map<String, dynamic> json) {
     eventId = json['eventId'];
     time = json['time'];
     agency = json['agency'];
