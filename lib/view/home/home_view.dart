@@ -5,9 +5,11 @@ import 'package:earthquake/core/constant/styles.dart';
 import 'package:earthquake/core/widgets/list_tile.dart';
 import 'package:earthquake/core/widgets/pointer.dart';
 import 'package:earthquake/core/widgets/selection.dart';
+import 'package:earthquake/view/details/details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/constant/routes.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
@@ -42,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
   void dispose() {
     super.dispose();
     viewModel.scrollController.dispose();
+    viewModel.textEditingController.dispose();
   }
 
   @override
@@ -79,11 +82,13 @@ class _ListView extends StatelessWidget {
                 return viewModel.earthquakesForSelections == null
                     ? Container()
                     : InkWell(
-                        onTap: () => viewModel.showMaterialDialog(
-                            context,
-                            viewModel.earthquakesForSelections![index].city!,
-                            viewModel
-                                .earthquakesForSelections![index].district!),
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.details, arguments: DetailsModel(
+                            lat: double.tryParse(viewModel.earthquakesForSelections![index].lat!),
+                            lon: double.tryParse(viewModel.earthquakesForSelections![index].lon!),
+                          )
+                          );
+                        },
                         child: CustomListTile(
                           fun: () => true,
                           title: viewModel.titleChooser(index),
@@ -141,11 +146,9 @@ class _Text extends StatelessWidget {
                             try {
                               return Text(
                                   'En büyük deprem: ' +
-                                      viewModel.findTheLargest()!.district! +
-                                      ' (' +
                                       viewModel.findTheLargest()!.city! +
-                                      ') - Şiddet: ' +
-                                      viewModel.findTheLargest()!.m!,
+                                      ' (Şiddet: ' +
+                                      viewModel.findTheLargest()!.m! + ')',
                                   style: textMainStyle);
                             } catch (e) {
                               return const Text('-----');

@@ -1,14 +1,16 @@
+import 'package:earthquake/core/constant/routes.dart';
+import 'package:earthquake/view/details/details_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'core/base/view/base_view.dart';
-import 'view/home/home_view.dart';
 import 'view/home/home_viewmodel.dart';
 
 void main() {
   runApp(
     MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => HomeViewModel(),
+      ),
+        ChangeNotifierProvider(create: (context) => DetailsViewModel(),
       ),
     ],
       child: const MyApp(),
@@ -29,9 +31,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       themeMode: ThemeMode.dark,
       theme: ThemeData.dark(),
-      home: BaseView(
-        onPageBuilder: (context, value) => const Scaffold(body: HomeView()),
-      ),
+      routes: Routes.getRoutes(context),
+      initialRoute: Routes.homeView
     );
   }
 }

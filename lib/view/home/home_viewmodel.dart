@@ -27,7 +27,7 @@ class HomeViewModel extends ChangeNotifier {
   late final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
-  final TextEditingController _textEditingController = TextEditingController();
+  late final TextEditingController _textEditingController = TextEditingController();
   TextEditingController get textEditingController => _textEditingController;
 
   final EdgeInsets _animatedContainerMargin = const EdgeInsets.only(top: 0);
