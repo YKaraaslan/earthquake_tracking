@@ -30,7 +30,6 @@ class _DetailsViewState extends State<DetailsView> {
   void dispose() {
     super.dispose();
     viewModel.controller.dispose();
-    viewModel.dispose();
   }
 
   @override
@@ -38,7 +37,7 @@ class _DetailsViewState extends State<DetailsView> {
     return BaseView(
       appBar: AppBar(
         title: const Text('Deprem Bilgisi'),
-        /*actions: [
+        actions: [
           PopupMenuButton(
             itemBuilder: (context) => const [
               PopupMenuItem(
@@ -46,7 +45,7 @@ class _DetailsViewState extends State<DetailsView> {
               ),
             ],
           )
-        ],*/
+        ],
       ),
       onPageBuilder: (context, value) => const _DetailsBody(),
     );
@@ -58,34 +57,31 @@ class _DetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        try {
-          return Consumer(
-            builder: (context, DetailsViewModel viewModel, child) => GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                target: viewModel.latlon,
-                zoom: 10,
-              ),
-              onMapCreated: (GoogleMapController controller) {
-                viewModel.controller = controller;
-              },
-              markers: {
-                Marker(
-                  markerId: const MarkerId('origin'),
-                  infoWindow: const InfoWindow(title: 'Deprem Bölgesi'),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-                  position: viewModel.latlon
-                ),
-              },
-
-            ),
-          );
-        } catch (e) {
-          return const CircularProgressIndicator();
-        }
-      },
+    return Consumer(
+      builder: (context, DetailsViewModel viewModel, child) => GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(
+          target: viewModel.latlon,
+          zoom: 10,
+        ),
+        onMapCreated: (GoogleMapController controller) {
+          viewModel.controller = controller;
+          viewModel.setLatLon();
+          controller
+              .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+            target: viewModel.latlon,
+            zoom: 10,
+          )));
+        },
+        markers: {
+          Marker(
+              markerId: const MarkerId('origin'),
+              infoWindow: const InfoWindow(title: 'Deprem Bölgesi'),
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueOrange),
+              position: viewModel.latlon),
+        },
+      ),
     );
   }
 }
