@@ -2,23 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class DetailsViewModel extends ChangeNotifier {
-  double _lat = 38;
-  double _lon = 35;
+import '../../core/init/network/network_manager.dart';
+import '../../core/init/network/network_model.dart';
 
-  double get lat => _lat;
-  double get lon => _lon;
+class MapViewModel extends ChangeNotifier {
+  late final NetworkManager _networkManager = NetworkManager();
 
-  late LatLng latlon = LatLng(lat, lon);
+  List<NetworkModel>? _earthquakes;
+  List<NetworkModel>? get earthquakes => _earthquakes;
 
   late List<Marker> markers = [];
 
-  void setCoordinates(double? lats, double? lons, double? m) {
-    lats == null ? _lat = 38 : _lat = lats;
-    lons == null ? _lon = 35 : _lon = lons;
-    latlon = LatLng(lat, lon);
-    markers.add(markerCustom(m!, latlon));
+  getEarthquakes() async {
+    _earthquakes = await _networkManager.getEarthquakes();
+    bringMarkers();
     notifyListeners();
+  }
+
+  void bringMarkers() {
+    if (earthquakes != null) {
+      for (var data in earthquakes!) {
+        markers.add(markerCustom(double.parse(data.m!.trim()), LatLng(double.parse(data.lat!.trim()), double.parse(data.lon!.trim()))));
+      }
+    }
   }
 
   Marker markerCustom(double m, LatLng latlong) {
@@ -42,18 +48,11 @@ class DetailsViewModel extends ChangeNotifier {
     }
 
     return Marker(
-      width: m * 10,
-      height: m * 10,
+      width: m * 5,
+      height: m * 5,
       point: latlong,
       builder: (ctx) => CircleAvatar(
-        backgroundColor: Colors.purple,
-        radius: m * 10,
-        child: Padding(
-          padding: const EdgeInsets.all(3),
-          child: CircleAvatar(
-          backgroundColor: colorMarker,
-          ),
-        ),
+        backgroundColor: colorMarker,
       ),
     );
   }

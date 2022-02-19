@@ -5,11 +5,11 @@ import '../../core/constant/styles.dart';
 import '../../core/widgets/list_tile.dart';
 import '../../core/widgets/pointer.dart';
 import '../../core/widgets/selection.dart';
-import '../details/details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constant/routes.dart';
+import '../details/details_model.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
@@ -20,31 +20,31 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final HomeViewModel viewModel;
+  late final HomeViewModel _viewModel;
   late final ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent) {
+        _viewModel.setItemCounter(20);
+      }
+    });
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      viewModel = context.read<HomeViewModel>();
-      viewModel.getEarthquakes();
-      _scrollController.addListener(() {
-        if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent) {
-          viewModel.setItemCounter(20);
-        }
-      });
+      _viewModel = context.read<HomeViewModel>();
+      _viewModel
+        ..getEarthquakes()
+        ..setControllers();
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    viewModel.scrollController.dispose();
-    viewModel.textEditingController.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -83,11 +83,14 @@ class _ListView extends StatelessWidget {
                     ? Container()
                     : InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.details, arguments: DetailsModel(
-                            lat: double.tryParse(viewModel.earthquakesForSelections![index].lat!),
-                            lon: double.tryParse(viewModel.earthquakesForSelections![index].lon!),
-                          )
-                          );
+                          Navigator.pushNamed(context, Routes.details,
+                              arguments: DetailsLatLongModel(
+                                  lat: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].lat!),
+                                  lon: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].lon!),
+                                  m: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].m!)));
                         },
                         child: CustomListTile(
                           fun: () => true,
@@ -148,7 +151,8 @@ class _Text extends StatelessWidget {
                                   'En büyük deprem: ' +
                                       viewModel.findTheLargest()!.city! +
                                       ' (Şiddet: ' +
-                                      viewModel.findTheLargest()!.m! + ')',
+                                      viewModel.findTheLargest()!.m! +
+                                      ')',
                                   style: textMainStyle);
                             } catch (e) {
                               return const Text('-----');
@@ -279,8 +283,7 @@ class _SearchBar extends StatelessWidget {
               onFocusChange: (hasFocus) {
                 if (hasFocus) {
                   viewModel.setFocused(true);
-                }
-                else{
+                } else {
                   viewModel.setFocused(false);
                 }
               },

@@ -1,8 +1,10 @@
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+
 import '../../core/base/view/base_view.dart';
 import 'details_model.dart';
 import 'details_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class DetailsView extends StatefulWidget {
@@ -14,22 +16,16 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   late final DetailsViewModel viewModel;
-  late final DetailsModel model;
+  late final DetailsLatLongModel model;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       viewModel = context.read<DetailsViewModel>();
-      model = ModalRoute.of(context)!.settings.arguments as DetailsModel;
-      viewModel.setCoordinates(model.lat, model.lon);
+      model = ModalRoute.of(context)!.settings.arguments as DetailsLatLongModel;
+      viewModel.setCoordinates(model.lat, model.lon, model.m);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    viewModel.controller.dispose();
   }
 
   @override
@@ -57,30 +53,26 @@ class _DetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DetailsLatLongModel model = ModalRoute.of(context)!.settings.arguments as DetailsLatLongModel;
     return Consumer(
-      builder: (context, DetailsViewModel viewModel, child) => GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: CameraPosition(
-          target: viewModel.latlon,
-          zoom: 10,
+      builder: (context, DetailsViewModel viewModel, child) => FlutterMap(
+        options: MapOptions(
+          center: LatLng(model.lat!, model.lon!),
+          zoom: 7,
+          adaptiveBoundaries: false,
+          allowPanning: true,
+          enableScrollWheel: true,
         ),
-        onMapCreated: (GoogleMapController controller) {
-          viewModel.controller = controller;
-          viewModel.setLatLon();
-          controller
-              .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-            target: viewModel.latlon,
-            zoom: 10,
-          )));
-        },
-        markers: {
-          Marker(
-              markerId: const MarkerId('origin'),
-              infoWindow: const InfoWindow(title: 'Deprem Bölgesi'),
-              icon: BitmapDescriptor.defaultMarkerWithHue(
-                  BitmapDescriptor.hueOrange),
-              position: viewModel.latlon),
-        },
+        layers: [
+          TileLayerOptions(
+            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            subdomains: ['a', 'b', 'c'],
+            attributionBuilder: (_) {
+              return const Text("© Yunus Karaaslan");
+            },
+          ),
+          MarkerLayerOptions(rotate: false, markers: viewModel.markers),
+        ],
       ),
     );
   }

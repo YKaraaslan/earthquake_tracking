@@ -1,18 +1,14 @@
-class DetailsModel {
+
+import '../../core/init/network/network_model.dart';
+
+class DetailsLatLongModel {
   double? lat;
   double? lon;
+  double? m;
 
-  DetailsModel({this.lat, this.lon});
+  DetailsLatLongModel({this.lat, this.lon, this.m});
+}
 
-  DetailsModel.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lon = json['lon'];
-  }
+class DetailsModel extends NetworkModel {
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lon'] = lon;
-    return data;
-  }
 }
