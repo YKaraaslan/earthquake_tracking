@@ -1,20 +1,17 @@
-import 'package:dio/dio.dart';
+import 'package:earthquake/core/init/network/network_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constant/sizes.dart';
-import 'home_model.dart';
-import 'home_service.dart';
+import '../../core/init/network/network_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  final String _baseUrl = 'https://www.mertkose.net/api/son-depremler/';
-  late final HomeService _homeService =
-      HomeService(Dio(BaseOptions(baseUrl: _baseUrl)));
+  late final NetworkManager _networkManager = NetworkManager();
 
-  List<HomeModel>? _earthquakes;
-  List<HomeModel>? get earthquakes => _earthquakes;
+  List<NetworkModel>? _earthquakes;
+  List<NetworkModel>? get earthquakes => _earthquakes;
 
-  List<HomeModel>? _earthquakesForSelections;
-  List<HomeModel>? get earthquakesForSelections => _earthquakesForSelections;
+  List<NetworkModel>? _earthquakesForSelections;
+  List<NetworkModel>? get earthquakesForSelections => _earthquakesForSelections;
 
   bool _isVisible = false;
   bool get isVisible => _isVisible;
@@ -42,15 +39,15 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   getEarthquakes() async {
-    _earthquakes = await _homeService.getEarthquakes();
+    _earthquakes = await _networkManager.getEarthquakes();
     _earthquakesForSelections = _earthquakes;
     notifyListeners();
   }
 
-  HomeModel? findTheLargest() {
+  NetworkModel? findTheLargest() {
     if (earthquakes != null) {
       double largest = 0;
-      HomeModel dataClass = HomeModel();
+      NetworkModel dataClass = NetworkModel();
       for (var data in _earthquakes!) {
         if (double.parse(data.m!.trim()) > largest) {
           dataClass = data;

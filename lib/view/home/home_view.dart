@@ -5,11 +5,11 @@ import '../../core/constant/styles.dart';
 import '../../core/widgets/list_tile.dart';
 import '../../core/widgets/pointer.dart';
 import '../../core/widgets/selection.dart';
-import '../details/details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constant/routes.dart';
+import '../details/details_model.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
@@ -84,7 +84,7 @@ class _ListView extends StatelessWidget {
                     : InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, Routes.details,
-                              arguments: DetailsModel(
+                              arguments: DetailsLatLongModel(
                                 lat: double.tryParse(viewModel
                                     .earthquakesForSelections![index].lat!),
                                 lon: double.tryParse(viewModel

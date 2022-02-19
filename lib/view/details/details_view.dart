@@ -15,14 +15,14 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   late final DetailsViewModel viewModel;
-  late final DetailsModel model;
+  late final DetailsLatLongModel model;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       viewModel = context.read<DetailsViewModel>();
-      model = ModalRoute.of(context)!.settings.arguments as DetailsModel;
+      model = ModalRoute.of(context)!.settings.arguments as DetailsLatLongModel;
       viewModel.setCoordinates(model.lat, model.lon);
     });
   }
