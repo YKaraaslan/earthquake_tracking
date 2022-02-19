@@ -19,17 +19,14 @@ class HomeViewModel extends ChangeNotifier {
   bool _isVisible = false;
   bool get isVisible => _isVisible;
 
-  late final ScrollController _scrollController = ScrollController();
-  ScrollController get scrollController => _scrollController;
+  late TextEditingController _textEditingController = TextEditingController();
+  TextEditingController get textEditingController => _textEditingController;
 
   int _itemCounter = 10;
   int get itemCounter => _itemCounter;
 
   late final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
-
-  late final TextEditingController _textEditingController = TextEditingController();
-  TextEditingController get textEditingController => _textEditingController;
 
   final EdgeInsets _animatedContainerMargin = const EdgeInsets.only(top: 0);
   EdgeInsets get animatedContainerMargin => _animatedContainerMargin;
@@ -149,5 +146,9 @@ class HomeViewModel extends ChangeNotifier {
     } else {
       return EdgeInsets.only(top: Sizes.height_25percent(context));
     }
+  }
+
+  void setControllers() {
+    _textEditingController = TextEditingController();
   }
 }

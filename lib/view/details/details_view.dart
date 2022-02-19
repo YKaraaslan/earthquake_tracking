@@ -1,5 +1,4 @@
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../../core/base/view/base_view.dart';
 import 'details_model.dart';
@@ -64,7 +63,7 @@ class _DetailsBody extends StatelessWidget {
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c'],
             attributionBuilder: (_) {
-              return Text("© Yunus Karaaslan");
+              return const Text("© Yunus Karaaslan");
             },
           ),
           MarkerLayerOptions(
@@ -74,9 +73,7 @@ class _DetailsBody extends StatelessWidget {
                 width: 80.0,
                 height: 80.0,
                 point: viewModel.latlon,
-                builder: (ctx) => Container(
-                  child: FlutterLogo(),
-                ),
+                builder: (ctx) => const FlutterLogo(),
               ),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'view/skeleton/skeleton_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,8 @@ import 'view/home/home_viewmodel.dart';
 void main() {
   runApp(
     MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => SkeletonViewModel(),
+      ),
         ChangeNotifierProvider(create: (context) => HomeViewModel(),
       ),
         ChangeNotifierProvider(create: (context) => DetailsViewModel(),
@@ -32,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.dark,
       theme: ThemeData.dark(),
       routes: Routes.getRoutes(context),
-      initialRoute: Routes.homeView
+      initialRoute: Routes.skeleton
     );
   }
 }
