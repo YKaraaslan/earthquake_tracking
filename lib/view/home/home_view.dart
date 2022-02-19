@@ -1,11 +1,11 @@
-import 'package:earthquake/core/base/view/base_view.dart';
-import 'package:earthquake/core/constant/assets.dart';
-import 'package:earthquake/core/constant/sizes.dart';
-import 'package:earthquake/core/constant/styles.dart';
-import 'package:earthquake/core/widgets/list_tile.dart';
-import 'package:earthquake/core/widgets/pointer.dart';
-import 'package:earthquake/core/widgets/selection.dart';
-import 'package:earthquake/view/details/details_model.dart';
+import '../../core/base/view/base_view.dart';
+import '../../core/constant/assets.dart';
+import '../../core/constant/sizes.dart';
+import '../../core/constant/styles.dart';
+import '../../core/widgets/list_tile.dart';
+import '../../core/widgets/pointer.dart';
+import '../../core/widgets/selection.dart';
+import '../details/details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,9 +1,9 @@
-import 'package:earthquake/core/constant/routes.dart';
-import 'package:earthquake/view/details/details_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:provider/provider.dart';
 
+import 'core/constant/routes.dart';
+import 'view/details/details_viewmodel.dart';
 import 'view/home/home_viewmodel.dart';
 
 void main() {

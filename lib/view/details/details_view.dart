@@ -1,6 +1,6 @@
-import 'package:earthquake/core/base/view/base_view.dart';
-import 'package:earthquake/view/details/details_model.dart';
-import 'package:earthquake/view/details/details_viewmodel.dart';
+import '../../core/base/view/base_view.dart';
+import 'details_model.dart';
+import 'details_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
