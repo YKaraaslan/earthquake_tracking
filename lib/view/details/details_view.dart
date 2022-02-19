@@ -1,4 +1,5 @@
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../core/base/view/base_view.dart';
 import 'details_model.dart';
@@ -23,10 +24,10 @@ class _DetailsViewState extends State<DetailsView> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       viewModel = context.read<DetailsViewModel>();
       model = ModalRoute.of(context)!.settings.arguments as DetailsLatLongModel;
-      viewModel.setCoordinates(model.lat, model.lon);
+      viewModel.setCoordinates(model.lat, model.lon, model.m);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -52,11 +53,15 @@ class _DetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DetailsLatLongModel model = ModalRoute.of(context)!.settings.arguments as DetailsLatLongModel;
     return Consumer(
       builder: (context, DetailsViewModel viewModel, child) => FlutterMap(
         options: MapOptions(
-          center: viewModel.latlon,
-          zoom: 8,
+          center: LatLng(model.lat!, model.lon!),
+          zoom: 7,
+          adaptiveBoundaries: false,
+          allowPanning: true,
+          enableScrollWheel: true,
         ),
         layers: [
           TileLayerOptions(
@@ -66,17 +71,7 @@ class _DetailsBody extends StatelessWidget {
               return const Text("© Yunus Karaaslan");
             },
           ),
-          MarkerLayerOptions(
-            rotate: false,
-            markers: [
-              Marker(
-                width: 80.0,
-                height: 80.0,
-                point: viewModel.latlon,
-                builder: (ctx) => const FlutterLogo(),
-              ),
-            ],
-          ),
+          MarkerLayerOptions(rotate: false, markers: viewModel.markers),
         ],
       ),
     );

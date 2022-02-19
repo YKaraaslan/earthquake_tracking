@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'core/constant/routes.dart';
 import 'view/details/details_viewmodel.dart';
 import 'view/home/home_viewmodel.dart';
+import 'view/map/map_viewmodel.dart';
 import 'view/skeleton/skeleton_viewmodel.dart';
 
 void main() {
@@ -14,6 +15,8 @@ void main() {
         ChangeNotifierProvider(create: (context) => HomeViewModel(),
       ),
         ChangeNotifierProvider(create: (context) => DetailsViewModel(),
+      ),
+        ChangeNotifierProvider(create: (context) => MapViewModel(),
       ),
     ],
       child: const MyApp(),

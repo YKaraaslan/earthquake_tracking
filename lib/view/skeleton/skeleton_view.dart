@@ -14,11 +14,12 @@ class SkeletonView extends StatelessWidget {
       builder: (context, SkeletonViewModel viewModel, child) => BaseView(
         onPageBuilder: (context, value) => viewModel.setPage(),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: viewModel.index,
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.warning), label: 'Ana Sayfa'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.map_sharp), label: 'Ana Sayfa'),
+                icon: Icon(Icons.map_sharp), label: 'Harita'),
           ],
           onTap: (index) {
             viewModel.setIndex(index);

@@ -28,11 +28,11 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
-        if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent) {
-          _viewModel.setItemCounter(20);
-        }
-      });
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent) {
+        _viewModel.setItemCounter(20);
+      }
+    });
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _viewModel = context.read<HomeViewModel>();
       _viewModel
@@ -85,11 +85,12 @@ class _ListView extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(context, Routes.details,
                               arguments: DetailsLatLongModel(
-                                lat: double.tryParse(viewModel
-                                    .earthquakesForSelections![index].lat!),
-                                lon: double.tryParse(viewModel
-                                    .earthquakesForSelections![index].lon!),
-                              ));
+                                  lat: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].lat!),
+                                  lon: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].lon!),
+                                  m: double.tryParse(viewModel
+                                      .earthquakesForSelections![index].m!)));
                         },
                         child: CustomListTile(
                           fun: () => true,

@@ -14,6 +14,5 @@ class SkeletonViewModel extends ChangeNotifier {
 
   Widget setPage() {
     return model.pages[index];
-    
   }
 }
