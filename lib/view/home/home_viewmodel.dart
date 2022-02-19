@@ -1,4 +1,4 @@
-import 'package:earthquake/core/init/network/network_manager.dart';
+import '../../core/init/network/network_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constant/sizes.dart';

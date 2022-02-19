@@ -1,9 +1,8 @@
-import '../../core/base/view/base_view.dart';
-import '../home/home_view.dart';
-import '../map/map_view.dart';
-import 'skeleton_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/base/view/base_view.dart';
+import 'skeleton_viewmodel.dart';
 
 class SkeletonView extends StatelessWidget {
   const SkeletonView({Key? key}) : super(key: key);
@@ -13,14 +12,7 @@ class SkeletonView extends StatelessWidget {
     context.read<SkeletonViewModel>();
     return Consumer(
       builder: (context, SkeletonViewModel viewModel, child) => BaseView(
-        onPageBuilder: (context, value) {
-          switch (viewModel.index) {
-            case 0:
-              return const HomeView();
-            default:
-              return const MapView();
-          }
-        },
+        onPageBuilder: (context, value) => viewModel.setPage(),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(
