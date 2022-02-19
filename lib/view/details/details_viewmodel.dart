@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 
 class DetailsViewModel extends ChangeNotifier {
-  late GoogleMapController controller;
-
   double _lat = 38;
   double _lon = 35;
 

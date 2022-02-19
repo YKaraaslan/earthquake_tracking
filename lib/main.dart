@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.dark,
       theme: ThemeData.dark(),
       routes: Routes.getRoutes(context),
-      initialRoute: Routes.skeleton
+      initialRoute: Routes.homeView
     );
   }
 }
