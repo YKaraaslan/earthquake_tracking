@@ -83,25 +83,40 @@ class _ListView extends StatelessWidget {
                     ? Container()
                     : InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.details,
-                              arguments: DetailsLatLongModel(
-                                  lat: double.tryParse(viewModel
-                                      .earthquakesForSelections![index].lat!),
-                                  lon: double.tryParse(viewModel
-                                      .earthquakesForSelections![index].lon!),
-                                  m: double.tryParse(viewModel
-                                      .earthquakesForSelections![index].m!)));
+                          Navigator.pushNamed(
+                            context,
+                            Routes.details,
+                            arguments: DetailsLatLongModel(
+                                lat: double.tryParse(viewModel
+                                    .earthquakesForSelections![index].lat!),
+                                lon: double.tryParse(viewModel
+                                    .earthquakesForSelections![index].lon!),
+                                m: double.tryParse(viewModel
+                                    .earthquakesForSelections![index].m!),
+                                city: viewModel.titleChooser(index),
+                                depth: 'Derinlik: ' +
+                                viewModel
+                                    .earthquakesForSelections![index].depth! +
+                                ' km',
+                                time: viewModel
+                                    .earthquakesForSelections![index].time!),
+                          );
                         },
-                        child: CustomListTile(
-                          fun: () => true,
-                          title: viewModel.titleChooser(index),
-                          subtitle: 'Derinlik: ' +
-                              viewModel
-                                  .earthquakesForSelections![index].depth! +
-                              ' km',
-                          time:
-                              viewModel.earthquakesForSelections![index].time!,
-                          value: viewModel.earthquakesForSelections![index].m!,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: CustomListTile(
+                            fun: () => true,
+                            title: viewModel.titleChooser(index),
+                            subtitle: 'Derinlik: ' +
+                                viewModel
+                                    .earthquakesForSelections![index].depth! +
+                                ' km',
+                            time: viewModel
+                                .earthquakesForSelections![index].time!,
+                            value:
+                                viewModel.earthquakesForSelections![index].m!,
+                            iconData: Icons.chevron_right,
+                          ),
                         ),
                       );
               } catch (e) {
