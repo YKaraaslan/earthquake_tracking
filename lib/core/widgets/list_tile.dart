@@ -8,37 +8,36 @@ class CustomListTile extends StatelessWidget {
   required this.title, 
   required this.subtitle, 
   required this.time, 
-  required this.fun}) : super(key: key);
+  required this.fun, 
+  required this.iconData}) : super(key: key);
   final String value, title, subtitle, time;
   final Function fun;
+  final IconData iconData;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      child: ListTile(
-        leading: Text(value, style: listTileValueStyle,),
-        title: Text(title),
-        subtitle: Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(subtitle)
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(time)
-              ),
-            ],
-          ),
-        ),
-        trailing: IconButton(
-              icon: const Icon(Icons.share_location), 
-              onPressed: () => fun,
+    return ListTile(
+      leading: Text(value, style: listTileValueStyle,),
+      title: Text(title),
+      subtitle: Align(
+        alignment: Alignment.topLeft,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(subtitle)
             ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(time)
+            ),
+          ],
+        ),
       ),
+      trailing: IconButton(
+            icon: Icon(iconData), 
+            onPressed: () => fun,
+          ),
     );
   }
 }

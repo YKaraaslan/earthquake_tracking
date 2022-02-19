@@ -11,13 +11,22 @@ class DetailsViewModel extends ChangeNotifier {
 
   late LatLng latlon = LatLng(lat, lon);
 
-  late List<Marker> markers = [];
+  late List<Marker> markers;
+
+  bool _isVisible = true;
+  bool get isVisible => _isVisible;
 
   void setCoordinates(double? lats, double? lons, double? m) {
     lats == null ? _lat = 38 : _lat = lats;
     lons == null ? _lon = 35 : _lon = lons;
     latlon = LatLng(lat, lon);
+    markers = [];
     markers.add(markerCustom(m!, latlon));
+    notifyListeners();
+  }
+
+  void changeVisibility() {
+    _isVisible = !_isVisible;
     notifyListeners();
   }
 
@@ -51,7 +60,7 @@ class DetailsViewModel extends ChangeNotifier {
         child: Padding(
           padding: const EdgeInsets.all(3),
           child: CircleAvatar(
-          backgroundColor: colorMarker,
+            backgroundColor: colorMarker,
           ),
         ),
       ),
