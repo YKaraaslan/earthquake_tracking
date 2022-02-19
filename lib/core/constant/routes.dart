@@ -5,7 +5,7 @@ import '../../view/home/home_view.dart';
 
 class Routes {
 
-  static const String homeView = '/home_view';
+  static const String homeView = '';
   static const String details = '/details';
 
   static Map<String, Widget Function(BuildContext)> getRoutes(BuildContext context) {
